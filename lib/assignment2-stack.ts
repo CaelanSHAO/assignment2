@@ -77,6 +77,71 @@ export class Assignment2Stack extends cdk.Stack {
     // 授权 Lambda 访问 DynamoDB
     imageTable.grantWriteData(logImageFn);
 
+    // Remove Image Lambda
+    const removeImageFn = new lambdaNode.NodejsFunction(this, 'RemoveImageFn', {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      entry: `${__dirname}/../lambdas/removeImage.ts`,
+      handler: 'handler',
+      environment: {
+        BUCKET_NAME: imagesBucket.bucketName,
+      },
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 256,
+    });
+
+    // DLQ -> Lambda 事件源
+    removeImageFn.addEventSource(new events.SqsEventSource(dlq, {
+      batchSize: 5,
+      maxBatchingWindow: cdk.Duration.seconds(5),
+    }));
+
+    // 授权 Lambda 删除 S3 对象
+    imagesBucket.grantDelete(removeImageFn);
+
+    // Add Metadata Lambda
+    const addMetadataFn = new lambdaNode.NodejsFunction(this, 'AddMetadataFn', {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      entry: `${__dirname}/../lambdas/addMetadata.ts`,
+      handler: 'handler',
+      environment: {
+        TABLE_NAME: imageTable.tableName,
+      },
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 256,
+    });
+
+    topic.addSubscription(new subs.LambdaSubscription(addMetadataFn, {
+      filterPolicy: {
+        metadata_type: sns.SubscriptionFilter.stringFilter({
+          allowlist: ['Caption', 'Date', 'name'],
+        }),
+      },
+    }));
+
+    imageTable.grantWriteData(addMetadataFn);
+
+    // Update Status Lambda
+    const updateStatusFn = new lambdaNode.NodejsFunction(this, 'UpdateStatusFn', {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      entry: `${__dirname}/../lambdas/updateStatus.ts`,
+      handler: 'handler',
+      environment: {
+        TABLE_NAME: imageTable.tableName,
+      },
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 256,
+    });
+
+    // SNS -> Lambda 订阅，过滤掉有 metadata_type 的消息（即只处理没有 metadata_type 的消息）
+    topic.addSubscription(new subs.LambdaSubscription(updateStatusFn, {
+      filterPolicy: {
+        metadata_type: sns.SubscriptionFilter.existsFilter(),
+      },
+    }));
+
+    // 授权 Lambda 访问 DynamoDB
+    imageTable.grantWriteData(updateStatusFn);
+
     // 输出资源名，便于后续 CLI 测试
     new cdk.CfnOutput(this, 'ImagesBucketName', {
       value: imagesBucket.bucketName,

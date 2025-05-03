@@ -1,0 +1,9 @@
+{
+  "Assignment2Stack": {
+    "ImageTableName": "Assignment2Stack-ImageTableF6499A4E-KSQLFX6JKD8M",
+    "ImagesBucketName": "assignment2stack-imagesbucket1e86afb2-kaoojr407kmt",
+    "ImageTopicArn": "arn:aws:sns:eu-west-1:913524944378:Assignment2Stack-ImageTopicBD97921B-6WXlFs66XEyU",
+    "DLQUrl": "https://sqs.eu-west-1.amazonaws.com/913524944378/Assignment2Stack-DLQ581697C4-QsnVzLdkRH7o",
+    "ImageQueueUrl": "https://sqs.eu-west-1.amazonaws.com/913524944378/Assignment2Stack-ImageQueueB29E40E5-4ipmAVPi2rww"
+  }
+}

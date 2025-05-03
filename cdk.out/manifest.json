@@ -18,7 +18,7 @@
         "validateOnSynth": false,
         "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
         "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
-        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/af9a274500b9b6742ab699bd1ee6e946bdb40e263f0c633d44cfb938725a5933.json",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/f1d9749adcf4ec89dbd4d554441fd7f3b815b8d45f27e9f32785a3b0aea7a724.json",
         "requiresBootstrapStackVersion": 6,
         "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
         "additionalDependencies": [
@@ -164,6 +164,90 @@
           {
             "type": "aws:cdk:logicalId",
             "data": "LogImageFnSqsEventSourceAssignment2StackImageQueue12677B1FA7DADCC0"
+          }
+        ],
+        "/Assignment2Stack/RemoveImageFn/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RemoveImageFnServiceRoleE9090B1A"
+          }
+        ],
+        "/Assignment2Stack/RemoveImageFn/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RemoveImageFnServiceRoleDefaultPolicyD1F3944E"
+          }
+        ],
+        "/Assignment2Stack/RemoveImageFn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RemoveImageFn5AE23881"
+          }
+        ],
+        "/Assignment2Stack/RemoveImageFn/SqsEventSource:Assignment2StackDLQEE0F5E56/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "RemoveImageFnSqsEventSourceAssignment2StackDLQEE0F5E56B5F4C4B7"
+          }
+        ],
+        "/Assignment2Stack/AddMetadataFn/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMetadataFnServiceRole4BD006DB"
+          }
+        ],
+        "/Assignment2Stack/AddMetadataFn/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMetadataFnServiceRoleDefaultPolicy59A6CE06"
+          }
+        ],
+        "/Assignment2Stack/AddMetadataFn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMetadataFn878C98A9"
+          }
+        ],
+        "/Assignment2Stack/AddMetadataFn/AllowInvoke:Assignment2StackImageTopic88314339": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMetadataFnAllowInvokeAssignment2StackImageTopic883143398E9C63A8"
+          }
+        ],
+        "/Assignment2Stack/AddMetadataFn/ImageTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "AddMetadataFnImageTopicE621B835"
+          }
+        ],
+        "/Assignment2Stack/UpdateStatusFn/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateStatusFnServiceRole2825D1C4"
+          }
+        ],
+        "/Assignment2Stack/UpdateStatusFn/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateStatusFnServiceRoleDefaultPolicy725B2F55"
+          }
+        ],
+        "/Assignment2Stack/UpdateStatusFn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateStatusFn5E566A86"
+          }
+        ],
+        "/Assignment2Stack/UpdateStatusFn/AllowInvoke:Assignment2StackImageTopic88314339": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateStatusFnAllowInvokeAssignment2StackImageTopic8831433982D0BE23"
+          }
+        ],
+        "/Assignment2Stack/UpdateStatusFn/ImageTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "UpdateStatusFnImageTopic85E391EF"
           }
         ],
         "/Assignment2Stack/ImagesBucketName": [
