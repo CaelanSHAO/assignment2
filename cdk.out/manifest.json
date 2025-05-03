@@ -1,0 +1,233 @@
+{
+  "version": "39.0.0",
+  "artifacts": {
+    "Assignment2Stack.assets": {
+      "type": "cdk:asset-manifest",
+      "properties": {
+        "file": "Assignment2Stack.assets.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+      }
+    },
+    "Assignment2Stack": {
+      "type": "aws:cloudformation:stack",
+      "environment": "aws://unknown-account/unknown-region",
+      "properties": {
+        "templateFile": "Assignment2Stack.template.json",
+        "terminationProtection": false,
+        "validateOnSynth": false,
+        "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-deploy-role-${AWS::AccountId}-${AWS::Region}",
+        "cloudFormationExecutionRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-cfn-exec-role-${AWS::AccountId}-${AWS::Region}",
+        "stackTemplateAssetObjectUrl": "s3://cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}/af9a274500b9b6742ab699bd1ee6e946bdb40e263f0c633d44cfb938725a5933.json",
+        "requiresBootstrapStackVersion": 6,
+        "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version",
+        "additionalDependencies": [
+          "Assignment2Stack.assets"
+        ],
+        "lookupRole": {
+          "arn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-lookup-role-${AWS::AccountId}-${AWS::Region}",
+          "requiresBootstrapStackVersion": 8,
+          "bootstrapStackVersionSsmParameter": "/cdk-bootstrap/hnb659fds/version"
+        }
+      },
+      "dependencies": [
+        "Assignment2Stack.assets"
+      ],
+      "metadata": {
+        "/Assignment2Stack/ImagesBucket/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImagesBucket1E86AFB2"
+          }
+        ],
+        "/Assignment2Stack/ImagesBucket/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImagesBucketPolicy5ED12B6C"
+          }
+        ],
+        "/Assignment2Stack/ImagesBucket/AutoDeleteObjectsCustomResource/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImagesBucketAutoDeleteObjectsCustomResource1A749259"
+          }
+        ],
+        "/Assignment2Stack/ImagesBucket/Notifications/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImagesBucketNotificationsF71CE2F4"
+          }
+        ],
+        "/Assignment2Stack/LatestNodeRuntimeMap": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LatestNodeRuntimeMap"
+          }
+        ],
+        "/Assignment2Stack/Custom::S3AutoDeleteObjectsCustomResourceProvider": [
+          {
+            "type": "aws:cdk:is-custom-resource-handler-customResourceProvider",
+            "data": true
+          }
+        ],
+        "/Assignment2Stack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Role": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderRole3B1BD092"
+          }
+        ],
+        "/Assignment2Stack/Custom::S3AutoDeleteObjectsCustomResourceProvider/Handler": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CustomS3AutoDeleteObjectsCustomResourceProviderHandler9D90184F"
+          }
+        ],
+        "/Assignment2Stack/ImageTable/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageTableF6499A4E"
+          }
+        ],
+        "/Assignment2Stack/ImageTopic/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageTopicBD97921B"
+          }
+        ],
+        "/Assignment2Stack/ImageTopic/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageTopicPolicy5192A75D"
+          }
+        ],
+        "/Assignment2Stack/DLQ/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DLQ581697C4"
+          }
+        ],
+        "/Assignment2Stack/ImageQueue/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageQueueB29E40E5"
+          }
+        ],
+        "/Assignment2Stack/ImageQueue/Policy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageQueuePolicy0C61D41A"
+          }
+        ],
+        "/Assignment2Stack/ImageQueue/Assignment2StackImageTopic88314339/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageQueueAssignment2StackImageTopic88314339B7EEA02E"
+          }
+        ],
+        "/Assignment2Stack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleB6FB88EC"
+          }
+        ],
+        "/Assignment2Stack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Role/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db834RoleDefaultPolicy2CF63D36"
+          }
+        ],
+        "/Assignment2Stack/BucketNotificationsHandler050a0587b7544547bf325f094a3db834/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BucketNotificationsHandler050a0587b7544547bf325f094a3db8347ECC3691"
+          }
+        ],
+        "/Assignment2Stack/LogImageFn/ServiceRole/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogImageFnServiceRoleC9B01B26"
+          }
+        ],
+        "/Assignment2Stack/LogImageFn/ServiceRole/DefaultPolicy/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogImageFnServiceRoleDefaultPolicy93C20C7E"
+          }
+        ],
+        "/Assignment2Stack/LogImageFn/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogImageFnE0509397"
+          }
+        ],
+        "/Assignment2Stack/LogImageFn/SqsEventSource:Assignment2StackImageQueue12677B1F/Resource": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "LogImageFnSqsEventSourceAssignment2StackImageQueue12677B1FA7DADCC0"
+          }
+        ],
+        "/Assignment2Stack/ImagesBucketName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImagesBucketName"
+          }
+        ],
+        "/Assignment2Stack/ImageTableName": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageTableName"
+          }
+        ],
+        "/Assignment2Stack/ImageTopicArn": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageTopicArn"
+          }
+        ],
+        "/Assignment2Stack/ImageQueueUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "ImageQueueUrl"
+          }
+        ],
+        "/Assignment2Stack/DLQUrl": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "DLQUrl"
+          }
+        ],
+        "/Assignment2Stack/CDKMetadata/Default": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadata"
+          }
+        ],
+        "/Assignment2Stack/CDKMetadata/Condition": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CDKMetadataAvailable"
+          }
+        ],
+        "/Assignment2Stack/BootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "BootstrapVersion"
+          }
+        ],
+        "/Assignment2Stack/CheckBootstrapVersion": [
+          {
+            "type": "aws:cdk:logicalId",
+            "data": "CheckBootstrapVersion"
+          }
+        ]
+      },
+      "displayName": "Assignment2Stack"
+    },
+    "Tree": {
+      "type": "cdk:tree",
+      "properties": {
+        "file": "tree.json"
+      }
+    }
+  }
+}
