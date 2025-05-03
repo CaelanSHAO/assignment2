@@ -1367,6 +1367,14 @@
                                       "Ref": "AWS::NoValue"
                                     }
                                   ]
+                                },
+                                {
+                                  "Action": [
+                                    "ses:SendEmail",
+                                    "ses:SendRawEmail"
+                                  ],
+                                  "Effect": "Allow",
+                                  "Resource": "*"
                                 }
                               ],
                               "Version": "2012-10-17"
@@ -1432,7 +1440,7 @@
                       "s3Bucket": {
                         "Fn::Sub": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}"
                       },
-                      "s3Key": "5ed181cf4a688979ac694edd5c6586cd295a8117e5354d7eae77a0937389b599.zip"
+                      "s3Key": "20eabacbbcfe5e2355752f3602ea413a8252de51aba790fc8f3223eb4e3099b2.zip"
                     },
                     "environment": {
                       "variables": {
@@ -1496,13 +1504,6 @@
                           "Fn::GetAtt": [
                             "UpdateStatusFn5E566A86",
                             "Arn"
-                          ]
-                        },
-                        "filterPolicy": {
-                          "metadata_type": [
-                            {
-                              "exists": true
-                            }
                           ]
                         },
                         "protocol": "lambda",

@@ -11,6 +11,9 @@ import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import * as lambdaNode from 'aws-cdk-lib/aws-lambda-nodejs';
 import * as events from 'aws-cdk-lib/aws-lambda-event-sources';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import * as ses from 'aws-cdk-lib/aws-ses';
+import { SendEmailCommand } from '@aws-sdk/client-ses';
 
 export class Assignment2Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -133,14 +136,16 @@ export class Assignment2Stack extends cdk.Stack {
     });
 
     // SNS -> Lambda 订阅，过滤掉有 metadata_type 的消息（即只处理没有 metadata_type 的消息）
-    topic.addSubscription(new subs.LambdaSubscription(updateStatusFn, {
-      filterPolicy: {
-        metadata_type: sns.SubscriptionFilter.existsFilter(),
-      },
-    }));
+    topic.addSubscription(new subs.LambdaSubscription(updateStatusFn));
 
     // 授权 Lambda 访问 DynamoDB
     imageTable.grantWriteData(updateStatusFn);
+
+    // 添加 SES 权限
+    updateStatusFn.addToRolePolicy(new iam.PolicyStatement({
+      actions: ['ses:SendEmail', 'ses:SendRawEmail'],
+      resources: ['*'],
+    }));
 
     // 输出资源名，便于后续 CLI 测试
     new cdk.CfnOutput(this, 'ImagesBucketName', {

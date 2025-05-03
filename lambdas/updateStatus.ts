@@ -1,8 +1,15 @@
 import { SNSEvent, Context } from 'aws-lambda';
 import { DynamoDBClient, UpdateItemCommand } from '@aws-sdk/client-dynamodb';
+import { SESClient, SendEmailCommand } from '@aws-sdk/client-ses';
+import { SNSClient, PublishCommand } from '@aws-sdk/client-sns';
 
 const TABLE_NAME = process.env.TABLE_NAME!;
 const ddb = new DynamoDBClient({});
+const ses = new SESClient({});
+const SENDER_EMAIL = '20108796@mail.wit.ie';   // 发件人邮箱
+const RECEIVER_EMAIL = '20108796@mail.wit.ie'; // 收件人邮箱
+const snsClient = new SNSClient({});
+const MAIL_TOPIC_ARN = process.env.MAIL_TOPIC_ARN!;
 
 export const handler = async (event: SNSEvent, context: Context) => {
   for (const record of event.Records) {
@@ -14,7 +21,7 @@ export const handler = async (event: SNSEvent, context: Context) => {
       console.error('Invalid message body:', sns.Message);
       continue;
     }
-    if (!message.id || !message.date || !message.update || !message.update.status || !message.update.reason) {
+    if (!message.id || !message.date || !message.update || !message.update.status || !message.update.reason || !message.email) {
       console.error('Missing required fields:', message);
       continue;
     }
@@ -39,6 +46,27 @@ export const handler = async (event: SNSEvent, context: Context) => {
         },
       }));
       console.log(`Updated status for image ${message.id}: ${message.update.status}`);
+
+      const subject = `Your image "${message.id}" review result: ${message.update.status}`;
+      const body = `Hello,\n\nYour image "${message.id}" has been reviewed.\nStatus: ${message.update.status}\nReason: ${message.update.reason || 'N/A'}\n\nThank you.`;
+      await ses.send(new SendEmailCommand({
+        Source: SENDER_EMAIL,
+        Destination: { ToAddresses: [RECEIVER_EMAIL] },
+        Message: {
+          Subject: { Data: subject },
+          Body: { Text: { Data: body } },
+        },
+      }));
+      console.log(`Mail sent to ${RECEIVER_EMAIL} for image ${message.id}`);
+
+      await snsClient.send(new PublishCommand({
+        TopicArn: MAIL_TOPIC_ARN,
+        Message: JSON.stringify({
+          id: message.id,
+          status: message.update.status,
+          reason: message.update.reason,
+        }),
+      }));
     } catch (err) {
       console.error('DynamoDB update error:', err);
     }
