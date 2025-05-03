@@ -2,5 +2,11 @@
   "dependencies": {
     "aws-cdk-lib": "^2.194.0",
     "constructs": "^10.4.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  },
+  "bundling": {
+    "forceDockerBundling": false,
   }
 }

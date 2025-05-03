@@ -1,3 +1,5 @@
+declare const __dirname: string;
+
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as s3 from 'aws-cdk-lib/aws-s3';
@@ -64,6 +66,9 @@ export class Assignment2Stack extends cdk.Stack {
       },
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
+      bundling: {
+        forceDockerBundling: false,
+      },
     });
 
     // SQS -> Lambda 事件源
