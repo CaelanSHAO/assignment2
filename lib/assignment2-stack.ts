@@ -6,6 +6,9 @@ import * as sns from 'aws-cdk-lib/aws-sns';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import * as subs from 'aws-cdk-lib/aws-sns-subscriptions';
 import * as s3n from 'aws-cdk-lib/aws-s3-notifications';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as lambdaNode from 'aws-cdk-lib/aws-lambda-nodejs';
+import * as events from 'aws-cdk-lib/aws-lambda-event-sources';
 
 export class Assignment2Stack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -50,6 +53,27 @@ export class Assignment2Stack extends cdk.Stack {
       s3.EventType.OBJECT_CREATED,
       new s3n.SnsDestination(topic)
     );
+
+    // Log Image Lambda
+    const logImageFn = new lambdaNode.NodejsFunction(this, 'LogImageFn', {
+      runtime: lambda.Runtime.NODEJS_18_X,
+      entry: `${__dirname}/../lambdas/logImage.ts`,
+      handler: 'handler',
+      environment: {
+        TABLE_NAME: imageTable.tableName,
+      },
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 256,
+    });
+
+    // SQS -> Lambda 事件源
+    logImageFn.addEventSource(new events.SqsEventSource(queue, {
+      batchSize: 5,
+      maxBatchingWindow: cdk.Duration.seconds(5),
+    }));
+
+    // 授权 Lambda 访问 DynamoDB
+    imageTable.grantWriteData(logImageFn);
 
     // 输出资源名，便于后续 CLI 测试
     new cdk.CfnOutput(this, 'ImagesBucketName', {
